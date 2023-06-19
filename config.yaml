@@ -1,0 +1,39 @@
+basic:
+  # source: rtsp://admin:123qweASD@10.0.0.114/Streaming/Channels/101
+  source: temp/recorded_h264.mp4
+  camera_ip: 10.55.220.115
+  delaytime: 0
+  location: "cut machine"
+  machineid: 0
+  site: wzs
+  plant: F136
+  line: S17
+  errorreason: 手觸碰至危險區域
+  targetid: 30008684
+  thing_id: com.wistron.WZS_F136:30008684
+
+monitor:
+  patch_monitor-test:
+    subject_name:
+    - patch_area
+    thresh_list:
+    - -100
+  subjects:
+  - name: alarm_area
+    pts:
+    - - 300
+      - 0
+    - - 300
+      - 300
+    - - 500
+      - 400
+    - - 500
+      - 0
+    type: Area
+  tolerance: 17
+yolov8:
+  source: rtsp://admin:1q2w3e4r@10.0.0.114/Streaming/Channels/102
+  conf: 0.5
+  confidence: 0.5
+  use_tracker: true
+  weights: weights/yolov8n.pt

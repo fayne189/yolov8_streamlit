@@ -1,0 +1,34 @@
+version: '3.0'
+services:    
+  app: &basic
+    image: streamlit-yolov8:latest
+    container_name: streamlit_yolov8 #container Name需要修改
+    extra_hosts:
+      - "gitlab-k8s.wzs.wistron.com.cn:10.41.241.138"
+
+    runtime: nvidia
+    restart: always
+    volumes:
+     - /nfs/data/fayne/streamlit_apps/yolov8-streamlit-detection-tracking:/usr/src/app/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1024m"
+    deploy:
+      resources:
+        reservations:
+           devices:
+             - capabilities: ["gpu"]
+               device_ids: ["0"]
+    #            entrypoint: /bin/sh -c "/startup.sh; bash"
+    shm_size: "6g"
+    ports:
+      - 8501:8501
+    networks:
+      - my-net
+    stdin_open: true
+    tty: true
+
+networks:
+  my-net:
+      name: my-net
